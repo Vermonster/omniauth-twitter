@@ -19,7 +19,7 @@ module OmniAuth
           :description => raw_info['description'],
           :urls => {
             'Website' => raw_info['url'],
-            'Twitter' => 'http://twitter.com/' + raw_info['screen_name'],
+            'Twitter' => "http://twitter.com/#{raw_info['screen_name']}",
           }
         }
       end
@@ -29,7 +29,7 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= MultiJson.decode(access_token.get('/1/account/verify_credentials.json').body)
+        @raw_info ||= MultiJson.decode(access_token.get('/1.1/account/verify_credentials.json').body)
       rescue ::Errno::ETIMEDOUT
         raise ::Timeout::Error
       end
